@@ -1,17 +1,24 @@
 import "./profile.styles.css";
 
 
-const Profile = (props) => {
-
+const Profile = ({ userData }) => {
+    const { login, name, html_url, avatar_url, blog, followers, following, public_repos, created_at } = userData
+    console.log("hololo", userData )
     return (
-        <div className="footer-container">
+        <div className="profile-container">
 
 
-        <div className="footer-main">
+        <div className="profile-main">
 
 
-            <h1>{props.username}</h1>
+            <h1>{ login }</h1>
 
+            <p>
+                {name}
+                {blog}
+                {html_url}
+
+            </p>
 
 
         </div>

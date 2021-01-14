@@ -11,8 +11,8 @@ const Intro = () => {
 
 
                 <form action="/user" method="get" className="login-form">
-                    <input type="text" name="id" placeholder="Github Username:"></input>
-                    <button type="submit"> Submit </button>
+                    <input type="text" name="id" placeholder="GITHUB USERNAME"></input>
+                    <button type="submit"> SUBMIT! </button>
                 </form>
                 
 

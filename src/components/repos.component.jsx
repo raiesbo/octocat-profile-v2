@@ -4,10 +4,10 @@ import "./repos.styles.css";
 const Repos = (props) => {
 
     return (
-        <div className="footer-container">
+        <div className="repos-container">
 
 
-        <div className="footer-main">
+        <div className="repos-main">
 
 
             <h3>Repos</h3>

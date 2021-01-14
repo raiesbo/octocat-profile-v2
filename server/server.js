@@ -3,18 +3,26 @@ const app = express();
 
 const userData = require("./app")
 
-app.get('/user', async (req, res) => {
-    if (!req.query.id) {
+const port = process.env.PORT || 5000;
+
+app.get('/user?:id', async (req, res) => {
+    let id = req.query.id
+    // console.log(req.query)
+
+    if (!id) {
         res.status(404).send({
             error: "You must provide an address"
         })
     } else {
         try {
-            userData(req.query.id, ( error, body ) => {
+            userData(id, ( error, body ) => {
                 if(error) {
+                    console.log("there was an error", error)
                     res.send({ error })
                 } else {
-                    res.send({ body })
+                    res.json({
+                        body
+                    })
                 }
             })
         } catch (e) {
@@ -23,4 +31,6 @@ app.get('/user', async (req, res) => {
     }
 })
 
-app.listen(3000)
+app.listen(port, () => {
+    console.log(`Listening on port ${port}!`)
+})

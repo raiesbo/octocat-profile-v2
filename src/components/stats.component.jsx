@@ -4,10 +4,10 @@ import "./stats.styles.css";
 const Stats = (props) => {
 
     return (
-        <div className="footer-container">
+        <div className="stats-container">
 
 
-        <div className="footer-main">
+        <div className="stats-main">
 
 
             <h3>Stats</h3>

@@ -43,11 +43,6 @@
 }
 
 
-
-
-
-
-
 .dates {
     display: flex;
     flex-direction: row;
@@ -61,7 +56,6 @@
 .dates h3 {
     margin: 0;
 }
-
 
 
 .social-stats {
@@ -86,18 +80,6 @@
 
 .box:hover {
     background-color: var(--bg-color-alt);
-}
-
-.box1 {
-    
-}
-
-.box2 {
-
-}
-
-.box3 {
-
 }
 
 .box h4 {

@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Project from "./project.component";
 import "./repos.styles.css";
 import "./project.styles.css";
 
 
 const Repos = ({ reposData }) => {
-    const [ sortedRepos, setSortedRepos ] = useState([...reposData])
+    // const [ sortedRepos, setSortedRepos ] = useState([...reposData])
+    const [ sortingItem, serSortingItem ] = useState("stargazers_count");
     
     const handleSorting = (e) => {
         e.preventDefault();
         const val = e.target.value
         console.log("value", e.target.value)
-        setSortedRepos([...reposData].sort((a, b) =>(a[val] - b[val]) ? 1 : -1 ))
+        serSortingItem( val )
     }
+
+    // useEffect(() => {
+    //     setSortedRepos([...reposData].sort((a, b) => b[sortingItem] - a[sortingItem]))
+    // }, [sortingItem]) 
     
     return (
         <div className="repos-container">
@@ -21,7 +26,7 @@ const Repos = ({ reposData }) => {
 
                 <label for="sorting">Top Repositories 
                     <select id="sorting" className="input-selection" onChange={handleSorting}>
-                        <option value="stargazers_count" >by Starts</option>
+                        <option value="stargazers_count" >by Stars</option>
                         <option value="forks" >by Forks</option>
                         <option value="size" >by Bytes</option>
                     </select>
@@ -30,9 +35,10 @@ const Repos = ({ reposData }) => {
                 <div className="projects-container">
 
                     {
-                    sortedRepos ? sortedRepos
+                    reposData
+                        .sort((a, b) => b[sortingItem] - a[sortingItem])
                         .slice(0, 8)
-                        .map((item, id) => <Project item={ item } key={ id } />) : <p>Sorry, try it later.</p>
+                        .map((item, id) => <Project item={ item } key={ id } />) 
                     }
 
                 </div>

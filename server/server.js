@@ -23,7 +23,7 @@ app.get('/user?:id', async (req, res) => {
                     res.json({
                         body
                     })
-                }
+                }    
             })
         } catch (e) {
             res.status(400).send(e)

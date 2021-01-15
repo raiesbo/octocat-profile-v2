@@ -3,6 +3,7 @@ import Profile from "../components/profile.component";
 import Footer from "../components/footer.component";
 import Stats from "../components/stats.component";
 import Repos from "../components/repos.component";
+import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import "./user.styles.css";
 
@@ -12,6 +13,7 @@ const User = ({ username }) => {
 
     const [user, setUser ] = useState(username);
     const [userData, setUserData ] = useState([]);
+    const [reposData, setReposData ] = useState([]);
 
 
     useEffect(() => {
@@ -21,8 +23,12 @@ const User = ({ username }) => {
         //     .catch(err => console.error("here we go!!!", err));
         axios.get(`${url}users?id=${user}`)
             .then(resData => {
-                console.log("userData: ", resData.data.body)
-                return setUserData(resData.data.body)
+                if (resData.data === {}) return <Redirect to="/" push/>
+
+                console.log("userData: ", resData.data.body[0])
+                console.log("userData: ", resData.data.body[1])
+                setReposData(resData.data.body[1])
+                return setUserData(resData.data.body[0])
             })
             .catch(err => console.error("here we go!!!", err));
         // fetch('https://api.github.com/users/raiesbo')
@@ -42,7 +48,7 @@ const User = ({ username }) => {
         <div className="user-container">
             <Profile userData={ userData } />
             <Stats userData={ userData }/>
-            <Repos userData={ userData } />
+            <Repos reposData={ reposData } />
             <Footer />
             
         </div>

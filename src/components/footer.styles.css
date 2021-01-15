@@ -8,6 +8,7 @@
 .footer-main {
     /* background-color: red; */
     max-width: 1000px;
+    height: 180px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -17,7 +18,7 @@
 }
 
 .footer-main .icons {
-    margin: 30px auto 20px auto;
+    margin: 60px auto 10px auto;
     display: flex;
     flex-direction: row;
     align-items: center;

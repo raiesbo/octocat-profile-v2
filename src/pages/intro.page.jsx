@@ -7,7 +7,7 @@ const Intro = () => {
             <div className="intro-main">
 
 
-                <i class="fab fa-github fa-10x"></i>
+                <i className="fab fa-github fa-10x"></i>
 
 
                 <form action="/user" method="get" className="login-form">

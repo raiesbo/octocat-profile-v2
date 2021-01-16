@@ -27,6 +27,7 @@ const userData = (user, callback) => {
         .then((data2) => {
             console.log(data2)
             info.push(data2)
+            info.push("3") // shit for now, to delete
             return callback(undefined, info)
         })
         .catch((e) => {

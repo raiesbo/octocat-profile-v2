@@ -1,5 +1,5 @@
 import "./project.styles.css";
-import colors from "./github.colors";
+import colors from "../../assets/github.colors";
 
 const Project = ({ item , id }) => {
     const { name, forks, html_url, language, size, stargazers_count, created_at, description } = item

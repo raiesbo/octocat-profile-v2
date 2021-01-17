@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Profile from "../components/profile.component";
-import Footer from "../components/footer.component";
-import Stats from "../components/stats.component";
-import Repos from "../components/repos.component";
+import Profile from "../components/profile/profile.component";
+import Footer from "../components/footer/footer.component";
+import Stats from "../components/stats/stats.component";
+import Repos from "../components/repos/repos.component";
 import { Redirect } from "react-router-dom";
 // import axios from 'axios';
 import "./user.styles.css";
@@ -49,12 +49,12 @@ const User = ({ username }) => {
             return (
                 <Redirect from="/user" to="/?error=API rate limit exceeded" />
             )
-            
+
         } else {
             return (
                 <div className="user-container">
                     <Profile userData={userData} />
-                    <Stats userData={userData} />
+                    <Stats reposData={reposData} />
                     <Repos reposData={reposData} />
                     <Footer />
                 </div>

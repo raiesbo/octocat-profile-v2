@@ -4,75 +4,80 @@ import Footer from "../components/footer.component";
 import Stats from "../components/stats.component";
 import Repos from "../components/repos.component";
 import { Redirect } from "react-router-dom";
-import axios from 'axios';
+// import axios from 'axios';
 import "./user.styles.css";
-import {
-    BrowserRouter as Router,
-    Switch
-  } from "react-router-dom";
 
 
 const User = ({ username }) => {
 
-    const [userData, setUserData ] = useState([]);
-    const [reposData, setReposData ] = useState([]);
+    const [userData, setUserData] = useState([]);
+    const [reposData, setReposData] = useState([]);
 
 
     useEffect(() => {
-        const url="http://localhost:5000/"
-        axios.get(`${url}users?id=${username}`)
-            .then(resData => {
-                // if (!userData.message == "Not Found") {
-                //     return (
-                //         <Switch>
-                //             <Redirect to="/" push/>
-                //         </Switch>
-                //     )
-                // } 
+        const url = "http://localhost:5000/"
 
-                console.log("userData: ", resData.data.body[0])
-                console.log("reposData: ", resData.data.body[1])
-                setReposData(resData.data.body[1])
-                return setUserData(resData.data.body[0])
+        fetch(`${url}users?id=${username}`)
+            .then(response => response.json())
+            .then(resData => {
+                console.log("userData: ", resData.body[0])
+                console.log("reposData: ", resData.body[1])
+                console.log("reposData: ", resData.body)
+
+                setReposData(resData.body[1])
+                return setUserData(resData.body[0])
             })
             .catch(err => console.error("here we go!!!", err));
-        
-    }, []);
+
+    }, [username]);
 
     const renderUserData = () => {
-        if (userData.length != 3) {
+        if (username === "" || reposData === undefined) {
+
+            // let message;
+            // if (reposData.message) {
+            //     message = "API rate limit exceeded"
+            // } else {
+            //     message = "You should enter a valid Username"
+            // }
+
             return (
-                    <Redirect to="/" />
+                <Redirect from="/user" to="/?error=You should enter a valid Username" />
+            )
+
+        } else if (reposData.message) {
+            return (
+                <Redirect from="/user" to="/?error=API rate limit exceeded" />
             )
             
         } else {
             return (
                 <div className="user-container">
-                    <Profile userData={ userData } />
-                    <Stats userData={ userData }/>
-                    <Repos reposData={ reposData } />
+                    <Profile userData={userData} />
+                    <Stats userData={userData} />
+                    <Repos reposData={reposData} />
                     <Footer />
                 </div>
             )
         }
     }
 
-    return(
+    return (
         <div>
-        
+            {/* <div className="user-container"></div> */}
             {/* <Switch>
                 { !userData.message == "Not Found" ? <Redirect to="/" /> : null }
             </Switch> */}
- 
+
 
             {/* <Profile userData={ userData } />
             <Stats userData={ userData }/>
             <Repos reposData={ reposData } />
             <Footer /> */}
             {renderUserData()}
-            
+            {/* </div>    */}
         </div>
-        
+
     )
 }
 

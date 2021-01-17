@@ -27,7 +27,7 @@ function App() {
         </Route>
 
         <Route path="/">
-          <Intro />
+          <Intro errorMessage={ query.get("error") }/>
         </Route>
 
       </Switch>

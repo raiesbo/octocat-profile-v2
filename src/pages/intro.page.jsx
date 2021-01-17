@@ -1,6 +1,6 @@
 import "./intro.styles.css";
 
-const Intro = () => {
+const Intro = ({ errorMessage }) => {
     return (
         <div className="intro-container">
 
@@ -15,7 +15,7 @@ const Intro = () => {
                     <button type="submit"> SUBMIT! </button>
                 </form>
                 
-
+                <h5>{ errorMessage && errorMessage }</h5>
 
             </div>
 

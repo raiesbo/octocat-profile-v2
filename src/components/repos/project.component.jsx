@@ -2,7 +2,7 @@ import "./project.styles.css";
 import colors from "../../assets/github.colors";
 
 const Project = ({ item , id }) => {
-    const { name, forks, html_url, language, size, stargazers_count, created_at, description } = item
+    const { name, forks, html_url, language, size, stargazers_count, /*created_at,*/ description } = item
     const iconSize = "fa-sm"
     return(
         <div key={ id } className="project-container" >

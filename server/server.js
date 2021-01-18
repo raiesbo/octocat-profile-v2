@@ -1,13 +1,15 @@
 const express = require("express");
+var cors = require('cors')
 const app = express();
 
 const userData = require("./app")
 
 const port = process.env.PORT || 5000;
 
+app.use(cors())
+
 app.get('/user?:id', async (req, res) => {
     let id = req.query.id
-    // console.log(req.query)
 
     if (!id) {
         res.status(404).send({

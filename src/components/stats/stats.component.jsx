@@ -1,6 +1,6 @@
-import ChartOne from "./chartOne.component";
-// import ChartTwo from "./ChartTwo.component";
-// import ChartThree from "./ChartThree.component";
+import ChartTopLanguages from "./chartTopLanguages.component";
+import ChartMostStarred from "./chartMostStarred.component";
+import ChartStarsLanguage from "./chartStarsLanguage.component";
 import "./stats.styles.css";
 
 
@@ -19,21 +19,21 @@ const Stats = ({ reposData }) => {
                         <div className="chart-container">
                             <div className="chart-main chart1">
                                 <h4>Top Languages:</h4>
-                                {reposData ? <ChartOne reposData={ reposData } /> : <i className="fas fa-spinner fa-4x"></i>}
+                                {reposData ? <ChartTopLanguages reposData={ reposData } /> : <i className="fas fa-spinner fa-4x"></i>}
                             </div>
                         </div>
 
                         <div className="chart-container">
                             <div className="chart-main chart2">
-                                <h4>Stars per Language:</h4>
-                                <i className="fas fa-spinner fa-4x"></i>
+                                <h4>Top Starred Repos:</h4>
+                                {reposData ? <ChartMostStarred reposData={ reposData } /> : <i className="fas fa-spinner fa-4x"></i>}
                             </div>
                         </div>
 
                         <div className="chart-container">
                             <div className="chart-main chart3">
-                                <h4>Starred Repos:</h4>
-                                <i className="fas fa-spinner fa-4x"></i>
+                                <h4>Top Starred Languages:</h4>
+                                {reposData ? <ChartStarsLanguage reposData={ reposData } /> : <i className="fas fa-spinner fa-4x"></i>}
                             </div>
                         </div>
 

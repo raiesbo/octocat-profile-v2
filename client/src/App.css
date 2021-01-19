@@ -1,0 +1,30 @@
+:root {
+    --text-color-main: #c8d1db;
+    --text-color-main-hover: ;
+    --text-color-alt: #f0f6fc;
+    --text-color-special: #388bfd;
+
+    --bg-color-main: #161b22;
+    --bg-color-alt: #6e7681;
+    --bg-color-alt2: #232d3b;
+    
+    --border-color: #1f477e;
+    --shadow-color: #444444;
+
+    --font-main: 'Source Code Pro', monospace;
+    --font-alt: 'Montserrat', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--bg-color-main);
+    color: var(--text-color-main);
+    font-family: var(--font-main);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

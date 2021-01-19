@@ -1,0 +1,69 @@
+
+.intro-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background-color: var(--bg-colot-main);
+    color: var(--text-color-main);
+
+}
+
+
+.intro-main {
+    /* background-color: red; */
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    max-width: 800px;
+    justify-content: stretch;
+}
+
+.intro-main i {
+    color: var(--text-color-main);
+    opacity: 0.25;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form input {
+    background-color: transparent;
+    color: var(--text-color-main);
+    font-family: var(--font-alt);
+    padding: 10px;
+    border: 1px solid;
+    border-color: var(--border-color);
+    border-radius: 8px;
+    margin: 30px auto 20px auto;
+    min-width: 300px;
+    text-align: center;
+}
+
+.login-form input::placeholder {
+    color: var(--text-color-main);
+    text-align: center;
+    opacity: 0.6;
+}
+
+.login-form button {
+    color: var(--text-color-main);
+    background-color: var(--bg-color-alt2);
+    font-family: var(--font-alt);
+    border: 1px solid;
+    border-color: var(--border-color);
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: ease 200ms;
+    margin-bottom: 20px; /*only to ajust a bit to the top*/
+
+}
+
+.login-form button:hover {
+    background-color: var(--bg-color-alt);
+    color: var(--text-color-alt);
+}

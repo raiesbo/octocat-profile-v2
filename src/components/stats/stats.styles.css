@@ -33,9 +33,9 @@
     transition: ease 300ms;
 }
 
-.chart-container:hover {
+/* .chart-container:hover {
     background-color: var(--bg-color-alt);
-}
+} */
 
 .chart-main {
     /* min-height: 300px; */
@@ -46,8 +46,9 @@
     align-items: center;
 }
 
-.chart-main h4 {
-    margin: 0 0 20px 0;
+.chart-title {
+    color: var(--text-color-alt);
+    margin: 0;
     font-size: 1.2rem;
 }
 

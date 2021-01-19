@@ -1,14 +1,21 @@
+import React, { useState, useEffect } from "react";
 import "./charts.styles.css";
 import * as d3 from "d3";
 
 import colors from "../../assets/github.colors";
 
-import reposMockData from "../../assets/mock_reposData";
+// import reposMockData from "../../assets/mock_reposData";
 
 const ChartMostStarred = ({ reposData }) => {
+    const [newData, setNewData] = useState([])
+
+    useEffect(() => {
+        setNewData([...reposData])
+    }, [reposData])
 
     const mostStarred = []
-    for (let repo of reposData) {
+
+    for (let repo of newData) {
         mostStarred.push([repo.name, repo.language, repo.stargazers_count])
     }
     const sortedMostStarred = mostStarred.sort((a, b) => b[2] - a[2]).slice(0, 5)

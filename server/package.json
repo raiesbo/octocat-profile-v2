@@ -1,7 +1,7 @@
 {
-  "name": "server.js",
+  "name": "octocatprofile_v2_server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",

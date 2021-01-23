@@ -6,9 +6,19 @@ const userData = require("./app")
 
 const port = process.env.PORT || 5000;
 
-app.use(cors())
 
-app.get('/user?:id', async (req, res) => {
+const corsOptions = {
+    origin: "https://octocatprofile.raimonespasa.com",
+    optionsSuccessStatus: 200
+}
+
+// app.use(cors())
+
+app.get("/", cors(), (req, res) => {
+    res.send("octocar profiler REST API")
+})
+
+app.get('/user?:id', cors(corsOptions), async (req, res) => {
     let id = req.query.id
 
     if (!id) {

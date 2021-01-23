@@ -19,7 +19,7 @@ const Footer = () => {
                 </div>
 
                 <h5>
-                    Built and Designed with <span className="enfas">React, react-router, Axios, Node & Expess</span> by <br/>
+                    Built and Designed with <span className="enfas">React, react-router, D3.js, Node & Expess</span> by <br/>
                     <a href="https://raimonespasa.com/" title="personal website" target="_blank" rel="noreferrer"><span className="enfas">Raimon Espasa Bou</span></a> 
                 </h5>
 

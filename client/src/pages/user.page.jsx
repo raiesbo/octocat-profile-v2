@@ -4,7 +4,6 @@ import Footer from "../components/footer/footer.component";
 import Stats from "../components/stats/stats.component";
 import Repos from "../components/repos/repos.component";
 import { Redirect } from "react-router-dom";
-// import axios from 'axios';
 import "./user.styles.css";
 
 
@@ -15,9 +14,10 @@ const User = ({ username }) => {
 
 
     useEffect(() => {
-        const url = "http://localhost:5000/"
+        // const url = "http://localhost:5000/"
+        const url = "https://octocatprofiler-server.herokuapp.com/"
 
-        fetch(`${url}users?id=${username}`)
+        fetch(`${url}user?id=${username}`)
             .then(response => response.json())
             .then(resData => {
                 console.log("userData: ", resData.body[0])
@@ -33,13 +33,6 @@ const User = ({ username }) => {
 
     const renderUserData = () => {
         if (username === "" || reposData === undefined) {
-
-            // let message;
-            // if (reposData.message) {
-            //     message = "API rate limit exceeded"
-            // } else {
-            //     message = "You should enter a valid Username"
-            // }
 
             return (
                 <Redirect from="/user" to="/?error=You should enter a valid Username" />
@@ -64,18 +57,9 @@ const User = ({ username }) => {
 
     return (
         <div>
-            {/* <div className="user-container"></div> */}
-            {/* <Switch>
-                { !userData.message == "Not Found" ? <Redirect to="/" /> : null }
-            </Switch> */}
 
-
-            {/* <Profile userData={ userData } />
-            <Stats userData={ userData }/>
-            <Repos reposData={ reposData } />
-            <Footer /> */}
             {renderUserData()}
-            {/* </div>    */}
+
         </div>
 
     )

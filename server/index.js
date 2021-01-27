@@ -15,7 +15,7 @@ const corsOptions = {
 // app.use(cors())
 
 app.get("/", cors(), (req, res) => {
-    res.send("octocar profiler REST API")
+    res.send("Octocat Profiler REST API")
 })
 
 app.get('/user?:id', cors(corsOptions), async (req, res) => {

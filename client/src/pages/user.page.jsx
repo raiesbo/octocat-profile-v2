@@ -3,6 +3,7 @@ import Profile from "../components/profile/profile.component";
 import Footer from "../components/footer/footer.component";
 import Stats from "../components/stats/stats.component";
 import Repos from "../components/repos/repos.component";
+import Loading from "../components/loading/loading.component";
 import { Redirect } from "react-router-dom";
 import "./user.styles.css";
 
@@ -11,7 +12,6 @@ const User = ({ username }) => {
 
     const [userData, setUserData] = useState([]);
     const [reposData, setReposData] = useState([]);
-
 
     useEffect(() => {
         // const url = "http://localhost:5000/"
@@ -55,10 +55,15 @@ const User = ({ username }) => {
         }
     }
 
+    useEffect(() => {
+
+    }, [])
+
     return (
         <div>
 
-            {renderUserData()}
+            { reposData.length <= 0 ? <Loading /> : renderUserData() }
+            {/* {renderUserData()} */}
 
         </div>
 

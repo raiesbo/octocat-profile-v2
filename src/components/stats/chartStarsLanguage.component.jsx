@@ -17,7 +17,7 @@ const ChartStarsLanguage = ({ reposData }) => {
 
     for (let repo of newData) {
         if (repo.language == null || repo.stargazers_count === 0) {
-            console.log(repo.language, repo.name)
+            // console.log(repo.language, repo.name)
         } else if (!starsLanguage[repo.language]) {
             starsLanguage[repo.language] = repo.stargazers_count
         } else {
@@ -25,8 +25,6 @@ const ChartStarsLanguage = ({ reposData }) => {
         }
     }
     for (let lang in starsLanguage) arrStarsLanguage.push({ language: lang, stars: starsLanguage[lang] })
-    console.log("starsLanguage: ", starsLanguage)
-    console.log("arrStarsLanguage: ", arrStarsLanguage)
 
     // CANVAS CIRCLE
     const w = 300;
@@ -44,7 +42,7 @@ const ChartStarsLanguage = ({ reposData }) => {
     // .style("background-color", "red")
 
     const data = d3.pie().sort(null).value(d => d.stars)(arrStarsLanguage)
-    // console.log("data", data)
+
     const segments = d3.arc()
         .innerRadius(0)
         .outerRadius(r)

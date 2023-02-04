@@ -16,8 +16,11 @@ export default function App() {
 	return (
 		<div className="App">
 			<Switch>
+				<Route path="/user/:user">
+					<User />
+				</Route>
 				<Route path="/user">
-					<User username={query.get("id")} />
+					<Intro errorMessage={query.get("error")} />
 				</Route>
 				<Route path="/">
 					<Intro errorMessage={query.get("error")} />

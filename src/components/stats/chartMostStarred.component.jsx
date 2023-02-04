@@ -19,7 +19,6 @@ const ChartMostStarred = ({ reposData }) => {
         mostStarred.push([repo.name, repo.language, repo.stargazers_count])
     }
     const sortedMostStarred = mostStarred.sort((a, b) => b[2] - a[2]).slice(0, 5)
-    // console.log("mostStarred: ", mostStarred.sort((a, b) => b[2] - a[2]).slice(0, 5))
 
     const w = 350;
     const h = 300;
@@ -79,9 +78,6 @@ const ChartMostStarred = ({ reposData }) => {
     svg.append("g")
         .attr("transform", "translate(" + padding + ", 0)")
         .call(yAxis)
-
-
-
 
     return (
         <svg className="chartMostStarred">

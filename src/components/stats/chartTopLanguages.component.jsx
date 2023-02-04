@@ -13,24 +13,20 @@ const ChartTopLanguages = ({ reposData }) => {
         setNewData([...reposData])
     }, [reposData])
 
-    // console.log("newData", newData)
-
     const topLanguages = {}
     const arrTopLanguages = []
 
     for (let repo of newData) {
         if (repo.language == null) {
-            console.log(repo.language, repo.name)
+            // console.log(repo.language, repo.name)
         } else if (!topLanguages[repo.language]) {
             topLanguages[repo.language] = 1;
         } else {
             topLanguages[repo.language] = topLanguages[repo.language] + 1
         }
-        // console.log("repo.language: ",repo.language)
     }
+
     for (let repo in topLanguages) arrTopLanguages.push({ language: repo, stars: topLanguages[repo] })
-    // console.log("topLanguages: ", topLanguages)
-    // console.log("arrTopLanguages: ", arrTopLanguages)
 
     // CANVAS CIRCLE
     const w = 300;
@@ -48,7 +44,7 @@ const ChartTopLanguages = ({ reposData }) => {
     // .style("background-color", "red")
 
     const data = d3.pie().sort(null).value(d => d.stars)(arrTopLanguages)
-    // console.log("data", data)
+
     const segments = d3.arc()
         .innerRadius(r / 2)
         .outerRadius(r)

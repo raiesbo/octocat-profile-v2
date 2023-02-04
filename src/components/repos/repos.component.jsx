@@ -8,9 +8,7 @@ export default function Repos({ reposData }) {
 
     const handleSorting = (e) => {
         e.preventDefault();
-        const val = e.target.value
-        console.log("value", e.target.value)
-        serSortingItem(val)
+        serSortingItem(e.target.value)
     }
 
     return (
@@ -35,6 +33,5 @@ export default function Repos({ reposData }) {
                 </div>
             </div>
         </div>
-
     )
 }

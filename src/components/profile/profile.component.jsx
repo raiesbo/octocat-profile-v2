@@ -2,13 +2,11 @@ import "./profile.styles.css";
 
 const Profile = ({ userData }) => {
     const { login, name, html_url, avatar_url, followers, following, public_repos, created_at, location } = userData
-    console.log("hololo", userData)
+
     return (
         <div className="profile-container">
 
-
             <div className="profile-main">
-
 
                 {avatar_url && <img src={avatar_url} alt="avatar" className="avatar-img" />}
 

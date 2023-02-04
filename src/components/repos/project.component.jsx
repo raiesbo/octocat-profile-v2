@@ -1,7 +1,7 @@
 import colors from "../../assets/github.colors";
 import "./project.styles.css";
 
-const Project = ({ item, id }) => {
+export default function Project({ item, id }) {
     const { name, forks, html_url, language, size, stargazers_count, /*created_at,*/ description } = item
     const iconSize = "fa-sm"
     return (
@@ -25,5 +25,3 @@ const Project = ({ item, id }) => {
         </div>
     )
 }
-
-export default Project;

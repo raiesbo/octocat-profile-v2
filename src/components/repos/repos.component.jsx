@@ -22,14 +22,12 @@ export default function Repos({ reposData }) {
                     </select>
                 </label>
                 <div className="projects-container">
-
                     {
                         reposData
                             .sort((a, b) => b[sortingItem] - a[sortingItem])
                             .slice(0, 8)
                             .map((item, id) => <Project item={item} key={id} />)
                     }
-
                 </div>
             </div>
         </div>

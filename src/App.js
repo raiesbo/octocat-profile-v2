@@ -19,7 +19,7 @@ export default function App() {
 				<Route path="/user/:user">
 					<User />
 				</Route>
-				<Route path="/user">
+				<Route path="/user/">
 					<Intro errorMessage={query.get("error")} />
 				</Route>
 				<Route path="/">

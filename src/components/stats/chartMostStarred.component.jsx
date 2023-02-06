@@ -13,45 +13,40 @@ const ChartMostStarred = ({ reposData }) => {
         setNewData([...reposData])
     }, [reposData])
 
-    const mostStarred = []
+    const mostStarred = newData.map(repo => ({ name: repo.name, lang: repo.language, starsNum: repo.stargazers_count }))
 
-    for (let repo of newData) {
-        mostStarred.push([repo.name, repo.language, repo.stargazers_count])
-    }
-    const sortedMostStarred = mostStarred.sort((a, b) => b[2] - a[2]).slice(0, 5)
+    const sortedMostStarred = mostStarred.sort((a, b) => b.starsNum - a.starsNum).slice(0, 5)
 
     const w = 350;
     const h = 300;
     const padding = 60;
 
     const xScale = d3.scaleBand()
-        .domain(sortedMostStarred.map(i => i[0]))
+        .domain(sortedMostStarred.map(i => i.name))
         .rangeRound([padding, w - padding]) // works in pixels
         .padding(0.2); // padding between bars
 
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(sortedMostStarred, (d) => d[2])]) // according to the data
+        .domain([0, d3.max(sortedMostStarred, d => d.starsNum)]) // according to the data
         .range([h - padding, padding]) // the space we have in the canvas
-
 
     const svg = d3.select(".chartMostStarred")
         .attr("width", w)
         .attr("height", h)
         .attr("background-color", "white")
 
-
     svg.selectAll("rect")
         .data(sortedMostStarred)
         .enter()
         .append("rect")
         .attr("width", xScale.bandwidth())
-        .attr("height", (d) => h - padding - yScale(d[2]))
-        .attr("x", (d) => xScale(d[0]))
-        .attr("y", (d) => yScale(d[2]))
-        .attr("fill", (d) => colors[d[1]])
+        .attr("height", (d) => h - padding - yScale(d.starsNum))
+        .attr("x", (d) => xScale(d.name))
+        .attr("y", (d) => yScale(d.starsNum))
+        .attr("fill", (d) => colors[d.lang])
         .attr("class", "bars") // still need to define ".bars" in css
         .append("title")
-        .text((d) => `${d[1]}`)
+        .text((d) => `${d.lang}`)
 
 
     // svg.selectAll("text")
@@ -63,8 +58,10 @@ const ChartMostStarred = ({ reposData }) => {
     //     .attr("y", h - padding)
     //     .attr("transform", "rotate(90deg)")
 
+    const axis = Array.from(new Set(mostStarred.map(d => d.starsNum).sort()))
+
     const xAxis = d3.axisBottom(xScale)
-    const yAxis = d3.axisLeft(yScale)
+    const yAxis = d3.axisLeft(yScale).tickValues(axis).tickFormat(d3.format('.3'))
 
     svg.append("g")
         .attr('transform', `translate(0, ${h - padding})`)
@@ -80,11 +77,8 @@ const ChartMostStarred = ({ reposData }) => {
         .call(yAxis)
 
     return (
-        <svg className="chartMostStarred">
-
-        </svg>
+        <svg className="chartMostStarred"></svg>
     )
 }
-
 
 export default ChartMostStarred;

@@ -14,7 +14,7 @@ export default function Repos({ reposData }) {
     return (
         <div className="repos-container">
             <div className="repos-main">
-                <label for="sorting" className="sectiont-itle">Top Repositories
+                <label htmlFor="sorting" className="sectiont-itle">Top Repositories
                     <select id="sorting" className="input-selection" onChange={handleSorting}>
                         <option value="stargazers_count" >by Stars:</option>
                         <option value="forks" >by Forks:</option>

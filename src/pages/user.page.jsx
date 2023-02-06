@@ -14,9 +14,9 @@ export default function User() {
     const [reposData, setReposData] = useState([]);
 
     useEffect(() => {
-        const url = new URL("https://global-dashboard.vercel.app");
+        const url = new URL("https://global-dashboard.vercel.app/");
 
-        fetch(`${url}/api/github/${user}`)
+        fetch(`${url}api/github/${user}`)
             .then(response => response.json())
             .then(data => {
                 setReposData(data.reposData)

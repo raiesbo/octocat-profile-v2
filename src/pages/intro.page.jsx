@@ -8,14 +8,16 @@ export default function Intro({ errorMessage }) {
         if (username) window.location.assign(`/user/${username}`);
     }
 
-    const handlerKeyPress = (event) => {
-        if (event.key === 'Enter') handleClick();
-    }
-
     useEffect(() => {
+        const handlerKeyPress = (event) => {
+            if (event.key === 'Enter') {
+                username && window.location.assign(`/user/${username}`);
+            }
+        }
+
         window.addEventListener("keydown", handlerKeyPress);
         return () => window.removeEventListener("keydown", handlerKeyPress);
-    }, [])
+    }, [username])
 
     return (
         <div className="intro-container">

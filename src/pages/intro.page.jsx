@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./intro.styles.css";
 
 export default function Intro({ errorMessage }) {
-    const [username, setUsername] = useState();
+    const [username, setUsername] = useState('');
 
     const handleClick = () => {
-        username && window.location.assign(`/user/${username}`);
+        if (username) window.location.assign(`/user/${username}`);
     }
+
+    const handlerKeyPress = (event) => {
+        if (event.key === 'Enter') handleClick();
+    }
+
+    useEffect(() => {
+        window.addEventListener("keydown", handlerKeyPress);
+        return () => window.removeEventListener("keydown", handlerKeyPress);
+    }, [])
 
     return (
         <div className="intro-container">
@@ -17,7 +26,7 @@ export default function Intro({ errorMessage }) {
                         type="text"
                         placeholder="GITHUB USERNAME"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={e => setUsername(e.target.value)}
                     />
                     <button onClick={handleClick}> SUBMIT </button>
                 </div>

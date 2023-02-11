@@ -1,11 +1,10 @@
 import "./profile.styles.css";
 
-const Profile = ({ userData }) => {
-    const { login, name, html_url, avatar_url, followers, following, public_repos, created_at, location } = userData
+export default function Profile({ userData }) {
+    const { login, name, html_url, avatar_url, followers, following, public_repos, created_at, location } = userData;
 
     return (
         <div className="profile-container">
-
             <div className="profile-main">
 
                 {avatar_url && <img src={avatar_url} alt="avatar" className="avatar-img" />}
@@ -20,7 +19,6 @@ const Profile = ({ userData }) => {
                 </div>
 
                 <div className="social-stats">
-
                     <div className="box box1">
                         <h4>{public_repos}</h4>
                         <h5>Repositories</h5>
@@ -33,17 +31,10 @@ const Profile = ({ userData }) => {
                         <h4>{following}</h4>
                         <h5>Following</h5>
                     </div>
-
                 </div>
-
-
             </div>
-
-
         </div>
 
     )
 }
 
-
-export default Profile;

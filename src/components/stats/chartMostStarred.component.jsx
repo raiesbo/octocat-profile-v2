@@ -1,70 +1,65 @@
 import * as d3 from "d3";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./charts.styles.css";
 
 import colors from "../../assets/github.colors";
 
 // import reposMockData from "../../assets/mock_reposData";
 
-const ChartMostStarred = ({ reposData }) => {
-    const [newData, setNewData] = useState([])
+export default function ChartMostStarred({ reposData }) {
+    const [reposCleanData, setReposCleanData] = useState([])
 
     useEffect(() => {
-        setNewData([...reposData])
-    }, [reposData])
+        setReposCleanData(
+            [...reposData]
+                .map(repo => ({ name: repo.name, lang: repo.language, starsCount: repo.stargazers_count }))
+                .sort((a, b) => b.starsCount - a.starsCount)
+                .slice(0, 5)
+        )
+    }, [reposData]);
 
-    const mostStarred = newData.map(repo => ({ name: repo.name, lang: repo.language, starsNum: repo.stargazers_count }))
-
-    const sortedMostStarred = mostStarred.sort((a, b) => b.starsNum - a.starsNum).slice(0, 5)
-
-    const w = 350;
-    const h = 300;
+    const MARGIN = { TOP: 0, RIGHT: 0, BOTTOM: 60, LEFT: 60 }
+    const WIDTH = 350;
+    const HEIGHT = 300;
     const padding = 60;
 
+    const clearHeight = HEIGHT - MARGIN.TOP - MARGIN.BOTTOM;
+    const clearWidth = WIDTH - MARGIN.RIGHT - MARGIN.LEFT;
+
     const xScale = d3.scaleBand()
-        .domain(sortedMostStarred.map(i => i.name))
-        .rangeRound([padding, w - padding]) // works in pixels
+        .domain(reposCleanData.map(i => i.name))
+        .rangeRound([padding, clearWidth]) // works in pixels
         .padding(0.2); // padding between bars
 
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(sortedMostStarred, d => d.starsNum)]) // according to the data
-        .range([h - padding, padding]) // the space we have in the canvas
+        .domain([0, d3.max(reposCleanData, d => d.starsCount)]) // according to the data
+        .range([clearHeight, padding]) // the space we have in the canvas
 
     const svg = d3.select(".chartMostStarred")
-        .attr("width", w)
-        .attr("height", h)
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
         .attr("background-color", "white")
 
     svg.selectAll("rect")
-        .data(sortedMostStarred)
+        .data(reposCleanData)
         .enter()
         .append("rect")
         .attr("width", xScale.bandwidth())
-        .attr("height", (d) => h - padding - yScale(d.starsNum))
+        .attr("height", (d) => HEIGHT - padding - yScale(d.starsCount))
         .attr("x", (d) => xScale(d.name))
-        .attr("y", (d) => yScale(d.starsNum))
+        .attr("y", (d) => yScale(d.starsCount))
         .attr("fill", (d) => colors[d.lang])
         .attr("class", "bars") // still need to define ".bars" in css
         .append("title")
         .text((d) => `${d.lang}`)
 
+    const axis = Array.from(new Set(reposCleanData.map(d => d.starsCount).sort()));
 
-    // svg.selectAll("text")
-    //     .data(sortedMostStarred)
-    //     .enter()
-    //     .append("text")
-    //     .text((d) => d[0])
-    //     .attr("x", (d) => xScale(d[0]))
-    //     .attr("y", h - padding)
-    //     .attr("transform", "rotate(90deg)")
-
-    const axis = Array.from(new Set(mostStarred.map(d => d.starsNum).sort()))
-
-    const xAxis = d3.axisBottom(xScale)
-    const yAxis = d3.axisLeft(yScale).tickValues(axis).tickFormat(d3.format('.3'))
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale).tickValues(axis).tickFormat(d3.format('.3'));
 
     svg.append("g")
-        .attr('transform', `translate(0, ${h - padding})`)
+        .attr('transform', `translate(0, ${HEIGHT - padding})`)
         .call(xAxis)
         .selectAll("text")
         .attr("y", 10)
@@ -80,5 +75,3 @@ const ChartMostStarred = ({ reposData }) => {
         <svg className="chartMostStarred"></svg>
     )
 }
-
-export default ChartMostStarred;

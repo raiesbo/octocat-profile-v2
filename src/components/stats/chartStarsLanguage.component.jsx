@@ -1,13 +1,12 @@
 import * as d3 from "d3";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import colors from "../../assets/github.colors";
 import "./charts.styles.css";
 
 // import reposMockData from "../../assets/mock_reposData";
 
-const ChartStarsLanguage = ({ reposData }) => {
+export default function ChartStarsLanguage({ reposData }) {
     const [newData, setNewData] = useState([])
-
     useEffect(() => {
         setNewData([...reposData])
     }, [reposData])
@@ -24,7 +23,10 @@ const ChartStarsLanguage = ({ reposData }) => {
             starsLanguage[repo.language] = starsLanguage[repo.language] + repo.stargazers_count
         }
     }
-    for (let lang in starsLanguage) arrStarsLanguage.push({ language: lang, stars: starsLanguage[lang] })
+
+    for (let lang in starsLanguage) {
+        arrStarsLanguage.push({ language: lang, stars: starsLanguage[lang] })
+    }
 
     // CANVAS CIRCLE
     const w = 300;
@@ -82,18 +84,7 @@ const ChartStarsLanguage = ({ reposData }) => {
         .attr("y", 10)
         .classed("legend-text", true)
 
-
-
-
-
-
-
     return (
-        <svg className="chartStarsLanguage">
-
-        </svg>
+        <svg className="chartStarsLanguage"></svg>
     )
 }
-
-
-export default ChartStarsLanguage;

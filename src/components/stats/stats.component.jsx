@@ -8,12 +8,9 @@ export default function Stats({ reposData }) {
 
     return (
         <div className="stats-container">
-
             <div className="stats-main">
-
                 <h3 className="section-title">Stats:</h3>
                 <div className="charts-container">
-
                     <div className="chart-container">
                         <div className="chart-main chart1">
                             <h4 className="chart-title">Most Used Languages:</h4>
@@ -34,12 +31,8 @@ export default function Stats({ reposData }) {
                             {reposData ? <ChartStarsLanguage reposData={reposData} /> : <i className="fas fa-spinner fa-4x"></i>}
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     )
 }

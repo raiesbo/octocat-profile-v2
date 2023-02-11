@@ -1,12 +1,11 @@
 import * as d3 from "d3";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import colors from "../../assets/github.colors";
 import "./charts.styles.css";
 
 // import reposMockData from "../../assets/mock_reposData";
 
-
-const ChartTopLanguages = ({ reposData }) => {
+export default function ChartTopLanguages({ reposData }) {
     const [newData, setNewData] = useState([])
 
     useEffect(() => {
@@ -98,15 +97,7 @@ const ChartTopLanguages = ({ reposData }) => {
         .attr("y", 10)
         .classed("legend-text", true)
 
-
-
-
     return (
-        <svg className="chartTopLanguages">
-
-        </svg>
+        <svg className="chartTopLanguages"></svg>
     )
 }
-
-
-export default ChartTopLanguages;

@@ -42,7 +42,8 @@ export default function ChartMostStarred({ reposData }) {
     const xScale = d3.scaleBand()
         .domain(reposCleanData.map(d => d.name))
         .range([0, clearWidth])
-        .padding(0.2); // Space between columns
+        .paddingInner(0.3) // Space between columns
+        .paddingOuter(0.2);
 
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(reposCleanData, d => d.starsCount)]) // according to the data
@@ -90,6 +91,7 @@ export default function ChartMostStarred({ reposData }) {
         .attr("y", yScale(0))
         .attr("fill", (d) => colors[d.language])
         .transition(t)
+        .delay(1000)
         .attr("y", d => yScale(d.starsCount))
         .attr("height", d => clearHeight - yScale(d.starsCount));
 

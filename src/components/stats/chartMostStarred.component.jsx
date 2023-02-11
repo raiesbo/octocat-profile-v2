@@ -3,16 +3,23 @@ import { useEffect, useState } from "react";
 import "./charts.styles.css";
 
 import colors from "../../assets/github.colors";
+import range from "../../utils/range";
 
 // import reposMockData from "../../assets/mock_reposData";
 
 export default function ChartMostStarred({ reposData }) {
+    // TODO Add transition when loading
+    // TODO Add TOOLTIP to bards
     const [reposCleanData, setReposCleanData] = useState([])
 
     useEffect(() => {
         setReposCleanData(
-            [...reposData]
-                .map(repo => ({ name: repo.name, lang: repo.language, starsCount: repo.stargazers_count }))
+            reposData
+                .map(repo => ({
+                    name: repo.name,
+                    language: repo.language,
+                    starsCount: Number(repo.stargazers_count)
+                }))
                 .sort((a, b) => b.starsCount - a.starsCount)
                 .slice(0, 5)
         )
@@ -21,6 +28,7 @@ export default function ChartMostStarred({ reposData }) {
     const MARGIN = { TOP: 0, RIGHT: 0, BOTTOM: 60, LEFT: 60 }
     const WIDTH = 350;
     const HEIGHT = 300;
+    // TODO Remove 'padding' variable
     const padding = 60;
 
     const clearHeight = HEIGHT - MARGIN.TOP - MARGIN.BOTTOM;
@@ -48,15 +56,15 @@ export default function ChartMostStarred({ reposData }) {
         .attr("height", (d) => HEIGHT - padding - yScale(d.starsCount))
         .attr("x", (d) => xScale(d.name))
         .attr("y", (d) => yScale(d.starsCount))
-        .attr("fill", (d) => colors[d.lang])
+        .attr("fill", (d) => colors[d.language])
         .attr("class", "bars") // still need to define ".bars" in css
         .append("title")
-        .text((d) => `${d.lang}`)
-
-    const axis = Array.from(new Set([0, ...reposCleanData.map(d => d.starsCount).sort()]));
+        .text((d) => `${d.language}`)
 
     const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3.axisLeft(yScale).tickValues(axis).tickFormat(d3.format('.3'));
+    const yAxis = d3.axisLeft(yScale)
+        .tickValues(range(0, d3.max(reposCleanData.map(i => i.starsCount))))
+        .tickFormat(d3.format('.3'));
 
     svg.append("g")
         .attr('transform', `translate(0, ${HEIGHT - padding})`)

@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import "./charts.styles.css";
 
 import colors from "../../assets/github.colors";
-import range from "../../utils/range";
+import { range } from "../../utils";
 
 // import reposMockData from "../../assets/mock_reposData";
 
 export default function ChartMostStarred({ reposData }) {
-    // TODO Add transition when loading
     // TODO Add TOOLTIP to bards
     const [reposCleanData, setReposCleanData] = useState([])
+    const t = d3.transition().duration(750);
 
     useEffect(() => {
         setReposCleanData(
@@ -25,61 +25,73 @@ export default function ChartMostStarred({ reposData }) {
         )
     }, [reposData]);
 
-    const MARGIN = { TOP: 0, RIGHT: 0, BOTTOM: 60, LEFT: 60 }
-    const WIDTH = 350;
+    const MARGIN = { TOP: 60, RIGHT: 25, BOTTOM: 70, LEFT: 35 }
+    const WIDTH = 300;
     const HEIGHT = 300;
-    // TODO Remove 'padding' variable
-    const padding = 60;
 
     const clearHeight = HEIGHT - MARGIN.TOP - MARGIN.BOTTOM;
     const clearWidth = WIDTH - MARGIN.RIGHT - MARGIN.LEFT;
 
+    const svg = d3.select(".chartMostStarred")
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT);
+
+    const g = svg.append('g')
+        .attr('transform', `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`);
+
     const xScale = d3.scaleBand()
-        .domain(reposCleanData.map(i => i.name))
-        .rangeRound([padding, clearWidth]) // works in pixels
-        .padding(0.2); // padding between bars
+        .domain(reposCleanData.map(d => d.name))
+        .range([0, clearWidth])
+        .padding(0.2); // Space between columns
 
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(reposCleanData, d => d.starsCount)]) // according to the data
-        .range([clearHeight, padding]) // the space we have in the canvas
+        .range([clearHeight, 0]) // the space we have in the canvas
 
-    const svg = d3.select(".chartMostStarred")
-        .attr("width", WIDTH)
-        .attr("height", HEIGHT)
-        .attr("background-color", "white")
+    const xAxisGroup = g.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', `translate(0, ${clearHeight})`);
 
-    svg.selectAll("rect")
-        .data(reposCleanData)
-        .enter()
-        .append("rect")
+    const yAxisGroup = g.append('g')
+        .attr('class', 'y axis')
+
+    const xAxisCall = d3.axisBottom(xScale);
+    xAxisGroup.transition(t).call(xAxisCall)
+        .selectAll('text') // Bottom Axis Text
+        .attr('y', 10)
+        .attr('x', -5)
+        .attr('text-anchor', 'end')
+        .attr('transform', 'rotate(-40)');
+
+    const yAxisCall = d3.axisLeft(yScale)
+        .tickValues(range(0, d3.max(reposCleanData.map(d => d.starsCount))))
+        .tickFormat(num => Math.round(num));
+    yAxisGroup.transition(t).call(yAxisCall)
+
+    // DATA JOIN.Join new data with old elements
+    const rects = g.selectAll("rect").data(reposCleanData, d => d.language);
+
+    // EXIT old elements not present in new data
+    rects.exit().remove();
+
+    // UPDATE old elements present in new data
+    rects
+        .transition(t)
+        .attr("y", d => yScale(d.starsCount))
+        .attr("x", d => xScale(d.language))
         .attr("width", xScale.bandwidth())
-        .attr("height", (d) => HEIGHT - padding - yScale(d.starsCount))
+        .attr("height", d => clearHeight - yScale(d.language));
+
+    // ENTER new elements present in new data
+    rects.enter().append("rect")
+        .attr("width", xScale.bandwidth())
+        .attr("height", 0)
         .attr("x", (d) => xScale(d.name))
-        .attr("y", (d) => yScale(d.starsCount))
+        .attr("y", yScale(0))
         .attr("fill", (d) => colors[d.language])
-        .attr("class", "bars") // still need to define ".bars" in css
-        .append("title")
-        .text((d) => `${d.language}`)
+        .transition(t)
+        .attr("y", d => yScale(d.starsCount))
+        .attr("height", d => clearHeight - yScale(d.starsCount));
 
-    const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3.axisLeft(yScale)
-        .tickValues(range(0, d3.max(reposCleanData.map(i => i.starsCount))))
-        .tickFormat(d3.format('.3'));
-
-    svg.append("g")
-        .attr('transform', `translate(0, ${HEIGHT - padding})`)
-        .call(xAxis)
-        .selectAll("text")
-        .attr("y", 10)
-        .attr("x", 0)
-        .attr("transform", "rotate(-30)")
-        .style("text-anchor", "end");
-
-    svg.append("g")
-        .attr("transform", "translate(" + padding + ", 0)")
-        .call(yAxis)
-
-    return (
-        <svg className="chartMostStarred"></svg>
-    )
+    return <svg className="chartMostStarred" />
 }

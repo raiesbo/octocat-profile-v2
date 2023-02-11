@@ -48,7 +48,7 @@ export default function User() {
 
     return (
         <div>
-            {reposData.length <= 0 ? <Loading /> : renderUserData()}
+            {reposData?.length > 0 ? renderUserData() : <Loading />}
         </div>
     )
 }

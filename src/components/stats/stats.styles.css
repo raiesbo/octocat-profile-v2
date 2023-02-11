@@ -15,44 +15,14 @@
     margin: 60px 6px 40px 6px;
 }
 
-.charts-container{
+.charts-container {
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     row-gap: 20px;
     column-gap: 20px;
 }
 
-.chart-container {
-    background-color: var(--bg-color-alt2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    transition: ease 300ms;
-}
-
-/* .chart-container:hover {
-    background-color: var(--bg-color-alt);
-} */
-
-.chart-main {
-    /* min-height: 300px; */
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.chart-title {
-    color: var(--text-color-alt);
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.fa-spinner{
+.fa-spinner {
     animation-iteration-count: infinite;
     animation-name: rotation;
     animation-duration: 3s;
@@ -60,5 +30,7 @@
 }
 
 @keyframes rotation {
-    100% {transform: rotate(360deg)}
+    100% {
+        transform: rotate(360deg)
+    }
 }

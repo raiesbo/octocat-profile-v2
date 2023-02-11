@@ -53,7 +53,7 @@ export default function ChartMostStarred({ reposData }) {
         .append("title")
         .text((d) => `${d.lang}`)
 
-    const axis = Array.from(new Set(reposCleanData.map(d => d.starsCount).sort()));
+    const axis = Array.from(new Set([0, ...reposCleanData.map(d => d.starsCount).sort()]));
 
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale).tickValues(axis).tickFormat(d3.format('.3'));

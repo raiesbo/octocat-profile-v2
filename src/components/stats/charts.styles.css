@@ -18,3 +18,17 @@ text {
     font-size: 0.75rem;
     fill: var(--text-color-main);
 }
+
+.tooltipMostStarred {
+    position: fixed;
+    pointer-events: none;
+    background: rgb(107, 107, 107);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.tooltipMostStarred p {
+    color: #fff;
+    line-height: 1.2;
+    margin: 0;
+}

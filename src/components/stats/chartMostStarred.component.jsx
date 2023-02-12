@@ -8,7 +8,6 @@ import { range } from "../../utils";
 // import reposMockData from "../../assets/mock_reposData";
 
 export default function ChartMostStarred({ reposData }) {
-    // TODO Add TOOLTIP to bards
     const [reposCleanData, setReposCleanData] = useState([])
     const t = d3.transition().duration(750);
 
@@ -38,6 +37,10 @@ export default function ChartMostStarred({ reposData }) {
 
     const g = svg.append('g')
         .attr('transform', `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`);
+
+    const tip = d3.select('body').append('div')
+        .attr('class', 'tooltipMostStarred')
+        .style('opacity', 0)
 
     const xScale = d3.scaleBand()
         .domain(reposCleanData.map(d => d.name))
@@ -90,10 +93,28 @@ export default function ChartMostStarred({ reposData }) {
         .attr("x", (d) => xScale(d.name))
         .attr("y", yScale(0))
         .attr("fill", (d) => colors[d.language])
+        .on('mouseover', (d, entry) => {
+            const { clientX, clientY } = d;
+            const { language, name, starsCount } = entry;
+
+            const tooltip = tip.style('opacity', 1)
+                .html(`<p style="text-transform: uppercase"><strong>${name}</strong></p>
+                <p>Language: <strong>${language}</strong></p>
+                <p>Stars Count: <strong>${starsCount}</strong></p>`)
+
+            const { offsetWidth, offsetHeight } = tooltip._groups[0][0]
+
+            tooltip
+                .style("left", `${clientX - offsetWidth / 2}px`)
+                .style("top", `${clientY - offsetHeight - 10}px`)
+        })
+        .on("mouseout", () => {
+            tip.style("opacity", 0)
+        })
         .transition(t)
         .delay(1000)
         .attr("y", d => yScale(d.starsCount))
-        .attr("height", d => clearHeight - yScale(d.starsCount));
+        .attr("height", d => clearHeight - yScale(d.starsCount))
 
     return <svg className="chartMostStarred" />
 }

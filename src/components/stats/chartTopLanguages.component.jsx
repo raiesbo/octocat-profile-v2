@@ -39,10 +39,13 @@ export default function ChartTopLanguages({ reposData }) {
 
     const svg = d3.select(".chartTopLanguages")
         .attr("width", w)
-        .attr("height", h)
-    // .style("background-color", "red")
+        .attr("height", h);
 
-    const data = d3.pie().sort(null).value(d => d.stars)(arrTopLanguages)
+    const data = d3.pie().sort(null).value(d => d.stars)(arrTopLanguages);
+
+    const tip = d3.select('body').append('div')
+        .attr('class', 'tooltipTopLanguages')
+        .style('opacity', 0);
 
     const segments = d3.arc()
         .innerRadius(r / 2)
@@ -58,22 +61,24 @@ export default function ChartTopLanguages({ reposData }) {
     sections.enter()
         .append("path")
         .attr("d", segments)
-        .attr("fill", d => colors[d.data.language]);
+        .attr("fill", d => colors[d.data.language])
+        .on('mouseover', (d, entry) => {
+            const { clientX, clientY } = d;
+            const { language, stars } = entry.data;
 
-    // const content = d3.select("g")
-    //     .selectAll("text")
-    //     .data(data)
+            const tooltip = tip.style('opacity', 1)
+                .html(`<p style="text-transform: uppercase"><strong>${language}</strong></p>
+                <p>Repos Count: <strong>${stars}</strong></p>`)
 
-    // content.enter()
-    //     .append("text")
-    //     .each(function (d) {
-    //         let center = segments.centroid(d);
-    //         d3.select(this)
-    //             .attr("x", center[0])
-    //             .attr("y", center[1])
-    //             .text(d.data.language)
-    //             .classed("top-text", true);
-    //     });
+            const { offsetWidth, offsetHeight } = tooltip._groups[0][0]
+
+            tooltip
+                .style("left", `${clientX - offsetWidth / 2}px`)
+                .style("top", `${clientY - offsetHeight - 10}px`)
+        })
+        .on("mouseout", () => {
+            tip.style("opacity", 0)
+        })
 
     const legends = svg.append("g")
         .attr("transform", `translate(${cw - padding - 8}, ${padding})`)
@@ -97,7 +102,5 @@ export default function ChartTopLanguages({ reposData }) {
         .attr("y", 10)
         .classed("legend-text", true)
 
-    return (
-        <svg className="chartTopLanguages"></svg>
-    )
+    return <svg className="chartTopLanguages" />
 }

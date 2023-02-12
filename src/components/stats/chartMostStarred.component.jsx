@@ -40,7 +40,7 @@ export default function ChartMostStarred({ reposData }) {
 
     const tip = d3.select('body').append('div')
         .attr('class', 'tooltipMostStarred')
-        .style('opacity', 0)
+        .style('opacity', 0);
 
     const xScale = d3.scaleBand()
         .domain(reposCleanData.map(d => d.name))

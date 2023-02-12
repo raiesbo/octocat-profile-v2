@@ -40,10 +40,13 @@ export default function ChartStarsLanguage({ reposData }) {
 
     const svg = d3.select(".chartStarsLanguage")
         .attr("width", w)
-        .attr("height", h)
-    // .style("background-color", "red")
+        .attr("height", h);
 
-    const data = d3.pie().sort(null).value(d => d.stars)(arrStarsLanguage)
+    const data = d3.pie().sort(null).value(d => d.stars)(arrStarsLanguage);
+
+    const tip = d3.select('body').append('div')
+        .attr('class', 'tooltipStarsLanguage')
+        .style('opacity', 0);
 
     const segments = d3.arc()
         .innerRadius(0)
@@ -56,11 +59,27 @@ export default function ChartStarsLanguage({ reposData }) {
         .selectAll("path")
         .data(data);
 
-    sections.enter()
-        .append("path")
+    sections.enter().append("path")
         .attr("d", segments)
         .attr("fill", d => colors[d.data.language])
         .classed("pizza", true)
+        .on('mouseover', (d, entry) => {
+            const { clientX, clientY } = d;
+            const { language, stars } = entry.data;
+
+            const tooltip = tip.style('opacity', 1)
+                .html(`<p style="text-transform: uppercase"><strong>${language}</strong></p>
+                <p>Stars Count: <strong>${stars}</strong></p>`)
+
+            const { offsetWidth, offsetHeight } = tooltip._groups[0][0]
+
+            tooltip
+                .style("left", `${clientX - offsetWidth / 2}px`)
+                .style("top", `${clientY - offsetHeight - 10}px`)
+        })
+        .on("mouseout", () => {
+            tip.style("opacity", 0)
+        })
 
     const legends2 = svg.append("g")
         .attr("transform", `translate(${cw - padding - 8}, ${padding})`)
@@ -84,7 +103,5 @@ export default function ChartStarsLanguage({ reposData }) {
         .attr("y", 10)
         .classed("legend-text", true)
 
-    return (
-        <svg className="chartStarsLanguage"></svg>
-    )
+    return <svg className="chartStarsLanguage" />
 }

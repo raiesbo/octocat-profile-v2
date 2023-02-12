@@ -19,7 +19,9 @@ text {
     fill: var(--text-color-main);
 }
 
-.tooltipMostStarred {
+.tooltipTopLanguages,
+.tooltipMostStarred,
+.tooltipStarsLanguage {
     position: fixed;
     pointer-events: none;
     background: rgb(107, 107, 107);
@@ -27,6 +29,8 @@ text {
     border-radius: 4px;
 }
 
+.tooltipTopLanguages p,
+.tooltipStarsLanguage p,
 .tooltipMostStarred p {
     color: #fff;
     line-height: 1.2;
